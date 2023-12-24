@@ -2,6 +2,8 @@ const { app, BrowserWindow, screen, Tray, Menu } = require('electron')
 const path = require('path');
 
 let tray = null;
+let trayIconVisible = path.join(__dirname, 'alert-icon.png');
+let trayIconHidden = path.join(__dirname, 'alert-icon.png');
 
 const createWindow = () => {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
@@ -13,6 +15,7 @@ const createWindow = () => {
       y: height - 200, // Posición en el eje y
       show: true,
       icon:  __dirname + '/alert-icon.png',
+      refresh: true,
     });
 
     win.loadURL('http://www.pjud.cl/');
@@ -47,7 +50,10 @@ const createWindow = () => {
     });
 
     win.on('show', () => {
-        //tray.setHighlightMode('always')
+        tray.setImage(trayIconVisible);
+    });
+    win.on('hide', () => {
+        tray.setImage(trayIconHidden);
     });
 }
 
