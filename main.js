@@ -1,6 +1,8 @@
 // Importamos los módulos necesarios de Electron
-const { app, BrowserWindow, screen, Tray, Menu } = require("electron");
+const { app, BrowserWindow, screen, Tray, Menu, dialog } = require("electron");
 const path = require("path");
+
+let sitio = "http://localhost/boton-panico/public/boton-panico";
 
 // Declaramos las variables para la bandeja y los iconos
 let tray = null;
@@ -15,17 +17,26 @@ const createWindow = () => {
   // Creamos una nueva ventana
   const win = new BrowserWindow({
     width: 400,
-    height: 200,
+    height: 135,
     title: "Botón de Pánico",
     x: width - 400, // Posición en el eje x
-    y: height - 200, // Posición en el eje y
+    y: height - 135, // Posición en el eje y
     show: true,
     icon: __dirname + "/alert-icon.png",
     refresh: true,
   });
 
   // Cargamos una URL en la ventana
-  win.loadURL("http://www.pjud.cl/");
+  win.loadURL(sitio);
+  win.webContents.on("did-fail-load", () => {
+    win.loadURL(
+      "data:text/html;charset=utf-8," +
+        encodeURI("<body><h2>Error: No se pudo cargar la URL</h2></body>")
+    );
+    setInterval(() => {
+      win.loadURL(sitio);
+    }, 5000); // 5000 milisegundos son 5 segundos
+  });
 
   // Configuramos la ventana para que siempre esté en primer plano
   win.isAlwaysOnTop(true);
