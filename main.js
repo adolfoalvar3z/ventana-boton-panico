@@ -2,7 +2,7 @@
 const { app, BrowserWindow, screen, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 
-let sitio = "http://localhost/boton-panico/public/boton-panico";
+let sitio = "http://boton-panico.test/boton";
 
 // Declaramos las variables para la bandeja y los iconos
 let tray = null;
@@ -17,10 +17,10 @@ const createWindow = () => {
   // Creamos una nueva ventana
   const win = new BrowserWindow({
     width: 400,
-    height: 135,
+    height: 140,
     title: "Botón de Pánico",
     x: width - 400, // Posición en el eje x
-    y: height - 135, // Posición en el eje y
+    y: height - 140, // Posición en el eje y
     show: true,
     icon: __dirname + "/alert-icon.png",
     refresh: true,
