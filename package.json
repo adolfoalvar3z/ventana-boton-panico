@@ -367,6 +367,35 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
     "electron": "^28.1.2"
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./alert-icon.ico"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "your_app_name"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
