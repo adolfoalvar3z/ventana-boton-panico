@@ -1,3 +1,4 @@
+if(require('electron-squirrel-startup')) return;
 // Importamos los módulos necesarios de Electron
 const { app, BrowserWindow, screen, Tray, Menu, dialog } = require("electron");
 const path = require("path");
@@ -23,7 +24,7 @@ const createWindow = () => {
     x: 0, // Posición en el eje x
     y: height - 90, // Posición en el eje y
     show: true,
-    icon: __dirname + "/alert-icon.png",
+    icon: __dirname + "/alert-icon.ico",
     refresh: true,
     titleBarStyle: 'hidden',
     transparent: true,
@@ -63,7 +64,7 @@ const createWindow = () => {
   win.show();
 
   // Creamos una nueva bandeja con un icono
-  tray = new Tray(path.join(__dirname, "alert-icon.png"));
+  tray = new Tray(path.join(__dirname, "alert-icon.ico"));
 
   // Creamos un menú para la bandeja
   const contextMenu = Menu.buildFromTemplate([
@@ -75,10 +76,10 @@ const createWindow = () => {
   tray.setToolTip("Botón de Pánico");
   tray.setContextMenu(contextMenu);
 
-  // Recargamos la ventana cada 5 segundos
+/*   // Recargamos la ventana cada 5 segundos
   setInterval(() => {
     win.reload();
-  }, 5000); // 5000 milisegundos son 5 segundos
+  }, 5000); // 5000 milisegundos son 5 segundos */
 
   // Prevenimos que la ventana se cierre o minimice, en su lugar la ocultamos
   win.on("close", (event) => {
@@ -98,6 +99,8 @@ const createWindow = () => {
     tray.setImage(trayIconHidden);
   });
 };
+
+
 
 // Creamos la ventana cuando la aplicación esté lista
 app.whenReady().then(() => {
