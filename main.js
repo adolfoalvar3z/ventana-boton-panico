@@ -2,7 +2,8 @@
 const { app, BrowserWindow, screen, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 
-let sitio = "http://boton-panico.test/boton";
+
+let sitio = "http://10.130.161.63:8000/boton";
 
 // Declaramos las variables para la bandeja y los iconos
 let tray = null;
@@ -16,14 +17,17 @@ const createWindow = () => {
 
   // Creamos una nueva ventana
   const win = new BrowserWindow({
-    width: 400,
-    height: 140,
-    title: "Botón de Pánico",
-    x: width - 400, // Posición en el eje x
-    y: height - 140, // Posición en el eje y
+    width: 350,
+    height: 90,
+    title: "Botón de Alerta",
+    x: 0, // Posición en el eje x
+    y: height - 90, // Posición en el eje y
     show: true,
     icon: __dirname + "/alert-icon.png",
     refresh: true,
+    titleBarStyle: 'hidden',
+    transparent: true,
+    border: true,
   });
 
   // Cargamos una URL en la ventana
@@ -31,11 +35,11 @@ const createWindow = () => {
   win.webContents.on("did-fail-load", () => {
     win.loadURL(
       "data:text/html;charset=utf-8," +
-        encodeURI("<body><h2>Error: No se pudo cargar la URL</h2></body>")
+        encodeURI("<body><h4>Error: No se pudo cargar la URL</h4></body>")
     );
     setInterval(() => {
       win.loadURL(sitio);
-    }, 5000); // 5000 milisegundos son 5 segundos
+    }, 10000); // 10000 milisegundos son 10 segundos
   });
 
   // Configuramos la ventana para que siempre esté en primer plano
@@ -99,3 +103,4 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 });
+

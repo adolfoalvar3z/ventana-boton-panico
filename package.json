@@ -1,5 +1,5 @@
 {
-  "name": "ventana-boton-panico",
+  "name": "ventana-boton-alerta",
   "version": "1.0.0",
   "description": "proyecto ICAS",
   "main": "main.js",
@@ -83,7 +83,7 @@
     "dotenv-expand": "^5.1.0",
     "eastasianwidth": "^0.2.0",
     "ejs": "^3.1.9",
-    "electron-forge-maker-nsis": "^24.11.0",
+    "electron-forge-maker-nsis": "^24.13.3",
     "electron-installer-common": "^0.10.3",
     "electron-publish": "^24.9.4",
     "electron-squirrel-startup": "^1.0.0",
