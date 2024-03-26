@@ -1,7 +1,7 @@
 {
   "name": "ventana-boton-alerta",
-  "version": "1.0.0",
-  "description": "proyecto ICAS",
+  "version": "2.0.0",
+  "description": "proyecto ICAS - Adolfo Álvarez",
   "main": "main.js",
   "dependencies": {
     "7zip-bin": "^5.2.0",

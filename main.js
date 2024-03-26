@@ -10,7 +10,7 @@ let sitio = "http://10.130.161.63:8000/boton";
 let tray = null;
 let trayIconVisible = path.join(__dirname, "alert-icon.png");
 let trayIconHidden = path.join(__dirname, "alert-icon.png");
-
+let isQuitting = false;
 // Función para crear la ventana de la aplicación
 const createWindow = () => {
   // Obtenemos el tamaño de la pantalla
@@ -27,8 +27,9 @@ const createWindow = () => {
     icon: __dirname + "/alert-icon.ico",
     refresh: true,
     titleBarStyle: 'hidden',
+
     transparent: true,
-    border: true,
+    border: false,
   });
 
   // Cargamos una URL en la ventana
@@ -40,7 +41,7 @@ const createWindow = () => {
     );
     setInterval(() => {
       win.loadURL(sitio);
-    }, 10000); // 10000 milisegundos son 10 segundos
+    }, 7000); // 7000 milisegundos son 7 segundos
   });
 
   // Configuramos la ventana para que siempre esté en primer plano
@@ -51,13 +52,13 @@ const createWindow = () => {
   win.setMenuBarVisibility(false);
 
   // Configuramos la ventana para que no se pueda cerrar, minimizar, maximizar, redimensionar, poner en pantalla completa o mover
-  win.isClosable(false);
-  win.setClosable(false);
-  win.setMinimizable(false);
+  win.isClosable(true);
+  win.setClosable(true);
   win.setMaximizable(false);
   win.setResizable(false);
   win.setFullScreenable(false);
-  win.setMovable(false);
+  win.setMovable(true);
+  win.setMinimizable(true);
 
   // Ocultamos y mostramos la ventana
   win.hide();
@@ -69,11 +70,14 @@ const createWindow = () => {
   // Creamos un menú para la bandeja
   const contextMenu = Menu.buildFromTemplate([
     { label: "Mostrar", click: () => win.show() },
-    { label: "Salir", click: () => win.hide() },
+    { label: "Salir", click: () => {
+      isQuitting = true;
+      app.quit();
+    }},
   ]);
 
   // Configuramos la bandeja
-  tray.setToolTip("Botón de Pánico");
+  tray.setToolTip("Botón de Alerta");
   tray.setContextMenu(contextMenu);
 
 /*   // Recargamos la ventana cada 5 segundos
@@ -82,10 +86,13 @@ const createWindow = () => {
   }, 5000); // 5000 milisegundos son 5 segundos */
 
   // Prevenimos que la ventana se cierre o minimice, en su lugar la ocultamos
-  win.on("close", (event) => {
-    event.preventDefault();
-    win.hide();
+  win.on('close', (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      win.hide();
+    }
   });
+
   win.on("minimize", (event) => {
     event.preventDefault();
     win.hide();
